@@ -19,6 +19,7 @@ public class Series {
 
     // Rule: Each series can have many books (at least one)
     @OneToMany(mappedBy = "series")
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
     // Inverse side of Author <-> Series relationship

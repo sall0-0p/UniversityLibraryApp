@@ -20,6 +20,7 @@ public class Author {
 
     // Rule: Each author can write many books (at least one)
     @ManyToMany(mappedBy = "authors")
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 
     // Rule: Each author can have many books' series
@@ -30,6 +31,5 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "series_id")
     )
-    @JsonIgnore
     private Set<Series> series = new HashSet<>();
 }

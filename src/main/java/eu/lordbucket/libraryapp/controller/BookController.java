@@ -5,6 +5,10 @@ import eu.lordbucket.libraryapp.model.ReadingStatus;
 import eu.lordbucket.libraryapp.repository.BookRepository;
 import eu.lordbucket.libraryapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +25,25 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    // 1. GET ALL or SEARCH
-    // Usage: GET /api/books?title=Harry
+    // 1. GET ALL or SEARCH (Paged)
+    // Usage: GET /api/books?title=Harry&page=0&size=10
     @GetMapping
-    public ResponseEntity<List<Book>> getAllBooks(@RequestParam(required = false) String title) {
-        if (title != null && !title.isEmpty()) {
-            return ResponseEntity.ok(bookRepository.findByTitleContainingIgnoreCase(title));
-        }
-        // Assuming you have a findAll method in your service
-        return ResponseEntity.ok(bookRepository.findAll());
+    public ResponseEntity<Page<Book>> getAllBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return ResponseEntity.ok(bookService.searchBooks(title, pageable));
+    }
+
+    // 1.1 GET ALL (Unpaged - specifically for dashboard recent list if needed, strictly speaking we can reuse paged)
+    @GetMapping("/all")
+    public ResponseEntity<List<Book>> getAllBooksUnpaged() {
+        return ResponseEntity.ok(bookService.getAllBooksUnpaged());
     }
 
     // 2. GET SINGLE BOOK
