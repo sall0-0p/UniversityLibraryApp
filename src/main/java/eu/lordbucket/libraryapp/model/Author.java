@@ -1,5 +1,6 @@
 package eu.lordbucket.libraryapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,5 +30,6 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "series_id")
     )
+    @JsonIgnore
     private Set<Series> series = new HashSet<>();
 }

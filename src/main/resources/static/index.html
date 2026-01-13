@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyLibrary Manager</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .fab-pulse { animation: pulse-soft 2s infinite; }
+        @keyframes pulse-soft {
+            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Modal Transitions */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: visible !important; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800">
+
+<div class="flex h-screen overflow-hidden">
+
+    <aside class="hidden md:flex flex-col w-72 bg-white shadow-xl z-20">
+        <div class="p-6 flex items-center gap-3 border-b border-gray-100">
+            <div class="bg-indigo-600 text-white p-2 rounded-lg shadow-lg">
+                <span class="material-icons-round text-2xl">local_library</span>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight text-gray-800">MyLibrary</h1>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2 no-scrollbar">
+            <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Main</p>
+            <a href="#" onclick="app.navigate('dashboard')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
+                <span class="material-icons-round mr-4">dashboard</span><span class="font-medium">Dashboard</span>
+            </a>
+            <a href="#" onclick="app.navigate('books')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
+                <span class="material-icons-round mr-4">auto_stories</span><span class="font-medium">All Books</span>
+            </a>
+            <a href="#" onclick="app.navigate('categories')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
+                <span class="material-icons-round mr-4">category</span><span class="font-medium">Categories</span>
+            </a>
+
+            <div class="pt-4 pb-2"><div class="border-t border-gray-100"></div></div>
+            <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Management</p>
+
+            <a href="#" onclick="app.navigate('authors')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
+                <span class="material-icons-round mr-4">person</span><span class="font-medium">Authors</span>
+            </a>
+            <a href="#" onclick="app.navigate('publishers')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
+                <span class="material-icons-round mr-4">domain</span><span class="font-medium">Publishers</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative w-full" id="main-content">
+        <header class="md:hidden bg-white shadow-sm sticky top-0 z-10 px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="material-icons-round text-indigo-600 text-2xl">local_library</span>
+                <span class="font-bold text-lg text-gray-800">MyLibrary</span>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto p-4 md:p-8 pb-24 md:pb-8" id="view-container">
+        </div>
+
+        <div class="fixed bottom-24 md:bottom-10 right-6 md:right-10 z-30">
+            <button onclick="app.openBookModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl p-4 shadow-lg flex items-center gap-2 transition-transform hover:-translate-y-1 fab-pulse">
+                <span class="material-icons-round text-2xl">add</span>
+                <span class="font-medium pr-1 hidden md:inline">Add Book</span>
+            </button>
+        </div>
+    </main>
+
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-40 pb-safe">
+        <div class="flex justify-around items-center p-2">
+            <a href="#" onclick="app.navigate('dashboard')" class="flex flex-col items-center justify-center p-2 text-indigo-600 w-1/4">
+                <span class="material-icons-round mb-1">dashboard</span><span class="text-[10px] font-bold">Home</span>
+            </a>
+            <a href="#" onclick="app.navigate('books')" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-indigo-600 transition-colors w-1/4">
+                <span class="material-icons-round mb-1">auto_stories</span><span class="text-[10px] font-medium">Books</span>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div id="book-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto">
+        <div class="modal-content py-4 text-left px-6">
+            <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold text-gray-800" id="modal-title">Add Book</p>
+                <div class="modal-close cursor-pointer z-50" onclick="app.closeModal('book-modal')">
+                    <span class="material-icons-round text-gray-500">close</span>
+                </div>
+            </div>
+            <form id="book-form" onsubmit="app.saveBook(event)">
+                <input type="hidden" id="book-id">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Title</label>
+                    <input type="text" id="book-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Author Name</label>
+                    <input type="text" id="book-author" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Publisher (Required)</label>
+                    <select id="book-publisher" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
+                    </select>
+                    <p class="text-xs text-red-500 mt-1 hidden" id="no-publisher-msg">No publishers found. Please add one first.</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Status</label>
+                    <select id="book-status" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                        <option value="UNREAD">Unread</option>
+                        <option value="READING">Reading</option>
+                        <option value="COMPLETED">Completed</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Category</label>
+                    <select id="book-category" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
+                        <option value="">None</option>
+                    </select>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <button type="button" onclick="app.closeModal('book-modal')" class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Cancel</button>
+                    <button type="submit" class="px-4 bg-indigo-600 p-3 rounded-lg text-white hover:bg-indigo-500">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="resource-modal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-sm mx-auto rounded-xl shadow-lg z-50">
+        <div class="modal-content py-4 text-left px-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4" id="resource-modal-title">Add Item</h3>
+            <form id="resource-form" onsubmit="app.saveResource(event)">
+                <input type="hidden" id="resource-type">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                    <input type="text" id="resource-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <button type="button" onclick="app.closeModal('resource-modal')" class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 mr-2">Cancel</button>
+                    <button type="submit" class="px-4 bg-indigo-600 p-3 rounded-lg text-white hover:bg-indigo-500">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<template id="tmpl-dashboard">
+    <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-gray-800">Dashboard</h2>
+        <div class="hidden md:flex gap-4">
+            <button onclick="window.location.href='/api/library/export'" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg shadow-sm hover:bg-gray-50 flex items-center gap-2">
+                <span class="material-icons-round text-sm">download</span> Export CSV
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-indigo-500 flex justify-between items-center">
+            <div><p class="text-sm font-medium text-gray-500">Total Books</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-total">0</p></div>
+            <div class="p-3 bg-indigo-50 text-indigo-600 rounded-full"><span class="material-icons-round">library_books</span></div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-emerald-500 flex justify-between items-center">
+            <div><p class="text-sm font-medium text-gray-500">Reading Now</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-reading">0</p></div>
+            <div class="p-3 bg-emerald-50 text-emerald-600 rounded-full"><span class="material-icons-round">menu_book</span></div>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-amber-500 flex justify-between items-center">
+            <div><p class="text-sm font-medium text-gray-500">To Read</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-unread">0</p></div>
+            <div class="p-3 bg-amber-50 text-amber-600 rounded-full"><span class="material-icons-round">bookmark</span></div>
+        </div>
+    </div>
+
+    <div class="mb-10">
+        <h3 class="text-xl font-bold text-gray-800 mb-6">Currently Reading</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="dashboard-reading-list">
+            <p class="text-gray-400 italic">No books currently being read.</p>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="text-xl font-bold text-gray-800 mb-6">Recent Additions</h3>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="p-4 text-xs font-semibold text-gray-500 uppercase">Book</th>
+                    <th class="p-4 text-xs font-semibold text-gray-500 uppercase hidden sm:table-cell">Status</th>
+                    <th class="p-4 text-xs font-semibold text-gray-500 uppercase text-right">Action</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100" id="dashboard-recent-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+<template id="tmpl-books">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h2 class="text-3xl font-bold text-gray-800">All Books</h2>
+        <div class="relative w-full md:w-auto">
+            <span class="material-icons-round absolute left-3 top-2.5 text-gray-400">search</span>
+            <input type="text" onkeyup="app.searchBooks(this.value)" placeholder="Search title..." class="pl-10 pr-4 py-2 w-full md:w-64 rounded-full border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50">
+            <tr>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase">Title</th>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase">Author</th>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase hidden sm:table-cell">Publisher</th>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase">Status</th>
+                <th class="p-4 text-right"></th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100" id="books-list-body"></tbody>
+        </table>
+    </div>
+</template>
+
+<template id="tmpl-resources">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800" id="resource-title">Resources</h2>
+        <button onclick="app.openResourceModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-sm hover:bg-indigo-700 flex items-center gap-2">
+            <span class="material-icons-round text-sm">add</span> <span id="resource-add-btn">Add New</span>
+        </button>
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50">
+            <tr>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase">ID</th>
+                <th class="p-4 text-xs font-semibold text-gray-500 uppercase">Name</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100" id="resource-list-body"></tbody>
+        </table>
+    </div>
+</template>
+
+<script>
+    const app = {
+        state: {
+            currentView: 'dashboard',
+            books: [],
+            publishers: [],
+            authors: [],
+            categories: [],
+            overview: {},
+            currentResourceType: '' // 'authors', 'publishers', 'categories'
+        },
+
+        init: async function() {
+            await this.fetchReferences();
+            this.navigate('dashboard');
+        },
+
+        api: async function(url, method = 'GET', body = null) {
+            const options = { method, headers: { 'Content-Type': 'application/json' } };
+            if (body) options.body = JSON.stringify(body);
+            try {
+                const res = await fetch(url, options);
+                if (!res.ok) throw new Error('API Error ' + res.status);
+
+                // ROBUST PARSING: Read text first
+                const text = await res.text();
+                return text ? JSON.parse(text) : null;
+            } catch (e) {
+                console.error("API Call Failed:", e);
+                return null;
+            }
+        },
+
+        fetchReferences: async function() {
+            this.state.publishers = await this.api('/api/references/publishers') || [];
+            this.state.categories = await this.api('/api/references/categories') || [];
+            // Note: Authors endpoint exists but books mainly use authorName string in this simple implementation
+        },
+
+        navigate: async function(view) {
+            this.state.currentView = view;
+            const container = document.getElementById('view-container');
+
+            // Update Sidebar Active State
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('bg-indigo-50', 'text-indigo-700'));
+            // (Simple highlighting logic omitted for brevity, assumes clicks handle visual toggle)
+
+            if (view === 'dashboard') {
+                container.innerHTML = document.getElementById('tmpl-dashboard').innerHTML;
+                await this.loadDashboard();
+            } else if (view === 'books') {
+                container.innerHTML = document.getElementById('tmpl-books').innerHTML;
+                await this.loadBooks();
+            } else {
+                // Resource Views
+                container.innerHTML = document.getElementById('tmpl-resources').innerHTML;
+                this.loadResources(view);
+            }
+        },
+
+        // --- DASHBOARD LOGIC ---
+        loadDashboard: async function() {
+            const stats = await this.api('/api/library/overview');
+            if (stats) {
+                document.getElementById('stat-total').innerText = stats.totalBooks || 0;
+                const bd = stats.statusBreakdown || {};
+                document.getElementById('stat-reading').innerText = bd.READING || 0;
+                document.getElementById('stat-unread').innerText = bd.UNREAD || 0;
+            }
+
+            const books = await this.api('/api/books');
+            if (!books) return;
+
+            // Reading List
+            const reading = books.filter(b => b.readingStatus === 'READING');
+            const readingContainer = document.getElementById('dashboard-reading-list');
+            if (reading.length > 0) {
+                readingContainer.innerHTML = reading.map(b => `
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex gap-4 items-center">
+                    <div class="w-16 h-20 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-400">
+                        <span class="material-icons-round">auto_stories</span>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-800 leading-tight">${b.title}</h4>
+                        <p class="text-sm text-gray-500">${b.authorName || 'Unknown'}</p>
+                        <span class="inline-block mt-2 px-2 py-1 text-xs font-bold bg-indigo-100 text-indigo-700 rounded">Reading</span>
+                    </div>
+                </div>
+            `).join('');
+            }
+
+            // Recent Additions (Last 5 reversed)
+            const recent = books.slice(-5).reverse();
+            document.getElementById('dashboard-recent-list').innerHTML = recent.map(b => `
+            <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-10 bg-gray-200 rounded flex-shrink-0"></div>
+                        <div><p class="font-medium text-gray-800">${b.title}</p><p class="text-xs text-gray-500">${b.authorName || ''}</p></div>
+                    </div>
+                </td>
+                <td class="p-4 hidden sm:table-cell"><span class="px-2 py-1 text-xs font-medium rounded-md ${this.getStatusColor(b.readingStatus)}">${b.readingStatus}</span></td>
+                <td class="p-4 text-right">
+                    <button onclick="app.editBook(${b.id})" class="text-gray-400 hover:text-indigo-600"><span class="material-icons-round">edit</span></button>
+                </td>
+            </tr>
+        `).join('');
+        },
+
+        // --- BOOKS LOGIC ---
+        loadBooks: async function(query = '') {
+            const url = query ? `/api/books?title=${query}` : '/api/books';
+            this.state.books = await this.api(url) || [];
+            this.renderBookList(this.state.books);
+        },
+
+        searchBooks: function(val) {
+            this.loadBooks(val); // Server-side search
+        },
+
+        renderBookList: function(books) {
+            const tbody = document.getElementById('books-list-body');
+            if(!tbody) return;
+            tbody.innerHTML = books.map(b => `
+            <tr class="hover:bg-gray-50 group border-b border-gray-50">
+                <td class="p-4 font-medium text-gray-800">${b.title}</td>
+                <td class="p-4 text-gray-600">${b.authorName || '-'}</td>
+                <td class="p-4 hidden sm:table-cell text-gray-500 text-sm">${b.publisher?.name || '-'}</td>
+                <td class="p-4"><span class="px-2 py-1 text-xs font-medium rounded-md ${this.getStatusColor(b.readingStatus)}">${b.readingStatus || 'UNREAD'}</span></td>
+                <td class="p-4 text-right flex justify-end gap-2">
+                    <button onclick="app.editBook(${b.id})" class="text-gray-400 hover:text-indigo-600"><span class="material-icons-round">edit</span></button>
+                    <button onclick="app.deleteBook(${b.id})" class="text-gray-400 hover:text-red-500"><span class="material-icons-round">delete</span></button>
+                </td>
+            </tr>
+        `).join('');
+        },
+
+        getStatusColor: function(status) {
+            if (status === 'COMPLETED') return 'bg-green-50 text-green-700';
+            if (status === 'READING') return 'bg-indigo-50 text-indigo-700';
+            return 'bg-gray-100 text-gray-600';
+        },
+
+        // --- RESOURCE LOGIC ---
+        loadResources: async function(type) {
+            this.state.currentResourceType = type;
+            const titleMap = { 'authors': 'Authors', 'publishers': 'Publishers', 'categories': 'Categories' };
+            document.getElementById('resource-title').innerText = titleMap[type];
+            document.getElementById('resource-add-btn').innerText = 'Add ' + titleMap[type].slice(0, -1);
+
+            const data = await this.api(`/api/references/${type}`);
+            const tbody = document.getElementById('resource-list-body');
+            tbody.innerHTML = data.map(item => `
+            <tr class="border-b border-gray-50 hover:bg-gray-50">
+                <td class="p-4 text-gray-500 font-mono text-xs">${item.id}</td>
+                <td class="p-4 font-medium text-gray-800">${item.name}</td>
+            </tr>
+        `).join('');
+        },
+
+        openResourceModal: function() {
+            document.getElementById('resource-form').reset();
+            document.getElementById('resource-type').value = this.state.currentResourceType;
+            this.toggleModal('resource-modal', true);
+        },
+
+        saveResource: async function(e) {
+            e.preventDefault();
+            const type = document.getElementById('resource-type').value;
+            const name = document.getElementById('resource-name').value;
+            await this.api(`/api/references/${type}`, 'POST', { name });
+            this.toggleModal('resource-modal', false);
+            this.loadResources(type);
+            this.fetchReferences(); // Refresh global cache
+        },
+
+        // --- ADD/EDIT BOOK ---
+        openBookModal: function(book = null) {
+            this.toggleModal('book-modal', true);
+            const form = document.getElementById('book-form');
+            form.reset();
+
+            // Populate Publishers Dropdown
+            const pubSelect = document.getElementById('book-publisher');
+            pubSelect.innerHTML = this.state.publishers.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+
+            // Handle empty publishers
+            if(this.state.publishers.length === 0) {
+                document.getElementById('no-publisher-msg').classList.remove('hidden');
+            } else {
+                document.getElementById('no-publisher-msg').classList.add('hidden');
+            }
+
+            // Populate Categories
+            const catSelect = document.getElementById('book-category');
+            catSelect.innerHTML = '<option value="">None</option>' + this.state.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+            if (book) {
+                document.getElementById('modal-title').innerText = 'Edit Book';
+                document.getElementById('book-id').value = book.id;
+                document.getElementById('book-title').value = book.title;
+                document.getElementById('book-author').value = book.authorName || '';
+                document.getElementById('book-status').value = book.readingStatus || 'UNREAD';
+                if (book.publisher) pubSelect.value = book.publisher.id;
+                if (book.category) catSelect.value = book.category.id;
+            } else {
+                document.getElementById('modal-title').innerText = 'Add Book';
+                document.getElementById('book-id').value = '';
+            }
+        },
+
+        editBook: async function(id) {
+            const book = await this.api(`/api/books/${id}`);
+            this.openBookModal(book);
+        },
+
+        saveBook: async function(e) {
+            e.preventDefault();
+            const id = document.getElementById('book-id').value;
+            const pubId = document.getElementById('book-publisher').value;
+            const catId = document.getElementById('book-category').value;
+
+            if (!pubId) { alert('Publisher is required. Please add one in the Publisher tab.'); return; }
+
+            const payload = {
+                title: document.getElementById('book-title').value,
+                authorName: document.getElementById('book-author').value,
+                readingStatus: document.getElementById('book-status').value,
+                publisher: { id: parseInt(pubId) },
+                category: catId ? { id: parseInt(catId) } : null
+            };
+
+            if (id) {
+                await this.api(`/api/books/${id}`, 'PUT', payload);
+            } else {
+                await this.api('/api/books', 'POST', payload);
+            }
+
+            this.toggleModal('book-modal', false);
+            if (this.state.currentView === 'books') this.loadBooks();
+            else this.navigate('dashboard');
+        },
+
+        deleteBook: async function(id) {
+            if(confirm('Are you sure you want to delete this book?')) {
+                await this.api(`/api/books/${id}`, 'DELETE');
+                this.loadBooks();
+            }
+        },
+
+        // --- UTILS ---
+        toggleModal: function(modalID, show) {
+            const modal = document.getElementById(modalID);
+            if (show) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                document.body.classList.add('modal-active');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                document.body.classList.remove('modal-active');
+            }
+        },
+
+        closeModal: function(modalID) {
+            this.toggleModal(modalID, false);
+        }
+    };
+
+    // Start
+    document.addEventListener('DOMContentLoaded', () => app.init());
+</script>
+</body>
+</html>
+}

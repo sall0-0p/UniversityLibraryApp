@@ -1,5 +1,6 @@
 package eu.lordbucket.libraryapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,5 +19,6 @@ public class Category {
 
     // Rule: Each category can have many books
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private Set<Book> books = new HashSet<>();
 }
