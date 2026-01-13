@@ -4,22 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyLibrary Manager</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
     <style>
         body { font-family: 'Roboto', sans-serif; }
         .fab-pulse { animation: pulse-soft 2s infinite; }
-        @keyframes pulse-soft {
-            0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
-        }
+        @keyframes pulse-soft { 0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); } 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); } }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .modal { transition: opacity 0.25s ease; }
@@ -38,35 +31,17 @@
         </div>
         <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2 no-scrollbar">
             <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Main</p>
-            <a href="#" onclick="app.navigate('dashboard')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">dashboard</span><span class="font-medium">Dashboard</span>
-            </a>
-            <a href="#" onclick="app.navigate('books')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">auto_stories</span><span class="font-medium">All Books</span>
-            </a>
-
+            <a href="#" onclick="app.navigate('dashboard')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">dashboard</span><span class="font-medium">Dashboard</span></a>
+            <a href="#" onclick="app.navigate('books')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">auto_stories</span><span class="font-medium">All Books</span></a>
             <div class="pt-4 pb-2"><div class="border-t border-gray-100"></div></div>
             <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Management</p>
-            <a href="#" onclick="app.navigate('series')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">collections_bookmark</span><span class="font-medium">Series</span>
-            </a>
-            <a href="#" onclick="app.navigate('genres')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">theater_comedy</span><span class="font-medium">Genres</span>
-            </a>
-            <a href="#" onclick="app.navigate('topics')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">topic</span><span class="font-medium">Topics</span>
-            </a>
-
+            <a href="#" onclick="app.navigate('series')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">collections_bookmark</span><span class="font-medium">Series</span></a>
+            <a href="#" onclick="app.navigate('genres')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">theater_comedy</span><span class="font-medium">Genres</span></a>
+            <a href="#" onclick="app.navigate('topics')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">topic</span><span class="font-medium">Topics</span></a>
             <div class="pt-2 pb-2"><div class="border-t border-gray-100"></div></div>
-            <a href="#" onclick="app.navigate('authors')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">person</span><span class="font-medium">Authors</span>
-            </a>
-            <a href="#" onclick="app.navigate('publishers')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">domain</span><span class="font-medium">Publishers</span>
-            </a>
-            <a href="#" onclick="app.navigate('categories')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all">
-                <span class="material-icons-round mr-4">category</span><span class="font-medium">Categories</span>
-            </a>
+            <a href="#" onclick="app.navigate('authors')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">person</span><span class="font-medium">Authors</span></a>
+            <a href="#" onclick="app.navigate('publishers')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">domain</span><span class="font-medium">Publishers</span></a>
+            <a href="#" onclick="app.navigate('categories')" class="nav-item flex items-center px-4 py-3 text-gray-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl transition-all"><span class="material-icons-round mr-4">category</span><span class="font-medium">Categories</span></a>
         </nav>
     </aside>
 
@@ -77,10 +52,7 @@
                 <span class="font-bold text-lg text-gray-800">MyLibrary</span>
             </div>
         </header>
-
-        <div class="max-w-7xl mx-auto p-4 md:p-8 pb-24 md:pb-8 min-h-full" id="view-container">
-        </div>
-
+        <div class="max-w-7xl mx-auto p-4 md:p-8 pb-24 md:pb-8 min-h-full" id="view-container"></div>
         <div class="fixed bottom-24 md:bottom-10 right-6 md:right-10 z-30">
             <button onclick="app.openBookModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl p-4 shadow-lg flex items-center gap-2 transition-transform hover:-translate-y-1 fab-pulse">
                 <span class="material-icons-round text-2xl">add</span>
@@ -91,12 +63,8 @@
 
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-40 pb-safe">
         <div class="flex justify-around items-center p-2">
-            <a href="#" onclick="app.navigate('dashboard')" class="flex flex-col items-center justify-center p-2 text-indigo-600 w-1/4">
-                <span class="material-icons-round mb-1">dashboard</span><span class="text-[10px] font-bold">Home</span>
-            </a>
-            <a href="#" onclick="app.navigate('books')" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-indigo-600 transition-colors w-1/4">
-                <span class="material-icons-round mb-1">auto_stories</span><span class="text-[10px] font-medium">Books</span>
-            </a>
+            <a href="#" onclick="app.navigate('dashboard')" class="flex flex-col items-center justify-center p-2 text-indigo-600 w-1/4"><span class="material-icons-round mb-1">dashboard</span><span class="text-[10px] font-bold">Home</span></a>
+            <a href="#" onclick="app.navigate('books')" class="flex flex-col items-center justify-center p-2 text-gray-400 hover:text-indigo-600 transition-colors w-1/4"><span class="material-icons-round mb-1">auto_stories</span><span class="text-[10px] font-medium">Books</span></a>
         </div>
     </nav>
 </div>
@@ -107,56 +75,25 @@
         <div class="modal-content py-4 text-left px-6">
             <div class="flex justify-between items-center pb-3">
                 <p class="text-2xl font-bold text-gray-800" id="modal-title">Add Book</p>
-                <div class="modal-close cursor-pointer z-50" onclick="app.closeModal('book-modal')">
-                    <span class="material-icons-round text-gray-500">close</span>
-                </div>
+                <div class="modal-close cursor-pointer z-50" onclick="app.closeModal('book-modal')"><span class="material-icons-round text-gray-500">close</span></div>
             </div>
             <form id="book-form" onsubmit="app.saveBook(event)">
                 <input type="hidden" id="book-id">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Title</label>
-                        <input type="text" id="book-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Author Name</label>
-                        <input type="text" id="book-author" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Title</label><input type="text" id="book-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required></div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Author Name</label><input type="text" id="book-author" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Publisher *</label>
-                        <select id="book-publisher" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required></select>
-                        <p class="text-xs text-red-500 mt-1 hidden" id="no-publisher-msg">Required. Add one in Management.</p>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Category</label>
-                        <select id="book-category" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"></select>
-                    </div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Publisher *</label><select id="book-publisher" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required></select></div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Category</label><select id="book-category" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"></select></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Series</label>
-                        <select id="book-series" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"></select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Status</label>
-                        <select id="book-status" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none">
-                            <option value="UNREAD">Unread</option>
-                            <option value="READING">Reading</option>
-                            <option value="COMPLETED">Completed</option>
-                        </select>
-                    </div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Series</label><select id="book-series" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"></select></div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Status</label><select id="book-status" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"><option value="UNREAD">Unread</option><option value="READING">Reading</option><option value="COMPLETED">Completed</option></select></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Genres</label>
-                        <div id="book-genres" class="h-32 overflow-y-auto border rounded p-2 bg-gray-50 text-sm space-y-1"></div>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Topics</label>
-                        <div id="book-topics" class="h-32 overflow-y-auto border rounded p-2 bg-gray-50 text-sm space-y-1"></div>
-                    </div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Genres</label><div id="book-genres" class="h-32 overflow-y-auto border rounded p-2 bg-gray-50 text-sm space-y-1"></div></div>
+                    <div><label class="block text-gray-700 text-sm font-bold mb-2">Topics</label><div id="book-topics" class="h-32 overflow-y-auto border rounded p-2 bg-gray-50 text-sm space-y-1"></div></div>
                 </div>
                 <div class="flex justify-end pt-2">
                     <button type="button" onclick="app.closeModal('book-modal')" class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 mr-2">Cancel</button>
@@ -174,10 +111,7 @@
             <h3 class="text-xl font-bold text-gray-800 mb-4" id="resource-modal-title">Add Item</h3>
             <form id="resource-form" onsubmit="app.saveResource(event)">
                 <input type="hidden" id="resource-type">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                    <input type="text" id="resource-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required>
-                </div>
+                <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Name</label><input type="text" id="resource-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none" required></div>
                 <div class="flex justify-end pt-2">
                     <button type="button" onclick="app.closeModal('resource-modal')" class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 mr-2">Cancel</button>
                     <button type="submit" class="px-4 bg-indigo-600 p-3 rounded-lg text-white hover:bg-indigo-500">Save</button>
@@ -190,29 +124,16 @@
 <template id="tmpl-dashboard">
     <div class="flex justify-between items-center mb-8">
         <h2 class="text-3xl font-bold text-gray-800">Dashboard</h2>
-        <button onclick="window.location.href='/api/library/export'" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg shadow-sm hover:bg-gray-50 flex items-center gap-2">
-            <span class="material-icons-round text-sm">download</span> Export CSV
-        </button>
+        <button onclick="window.location.href='/api/library/export'" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg shadow-sm hover:bg-gray-50 flex items-center gap-2"><span class="material-icons-round text-sm">download</span> Export CSV</button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-indigo-500 flex justify-between items-center">
-            <div><p class="text-sm font-medium text-gray-500">Total Books</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-total">0</p></div>
-            <div class="p-3 bg-indigo-50 text-indigo-600 rounded-full"><span class="material-icons-round">library_books</span></div>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-emerald-500 flex justify-between items-center">
-            <div><p class="text-sm font-medium text-gray-500">Reading Now</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-reading">0</p></div>
-            <div class="p-3 bg-emerald-50 text-emerald-600 rounded-full"><span class="material-icons-round">menu_book</span></div>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-amber-500 flex justify-between items-center">
-            <div><p class="text-sm font-medium text-gray-500">To Read</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-unread">0</p></div>
-            <div class="p-3 bg-amber-50 text-amber-600 rounded-full"><span class="material-icons-round">bookmark</span></div>
-        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-indigo-500 flex justify-between items-center"><div><p class="text-sm font-medium text-gray-500">Total Books</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-total">0</p></div><div class="p-3 bg-indigo-50 text-indigo-600 rounded-full"><span class="material-icons-round">library_books</span></div></div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-emerald-500 flex justify-between items-center"><div><p class="text-sm font-medium text-gray-500">Reading Now</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-reading">0</p></div><div class="p-3 bg-emerald-50 text-emerald-600 rounded-full"><span class="material-icons-round">menu_book</span></div></div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-amber-500 flex justify-between items-center"><div><p class="text-sm font-medium text-gray-500">To Read</p><p class="text-3xl font-bold text-gray-800 mt-1" id="stat-unread">0</p></div><div class="p-3 bg-amber-50 text-amber-600 rounded-full"><span class="material-icons-round">bookmark</span></div></div>
     </div>
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-4 bg-gray-50 border-b border-gray-100 font-bold text-gray-700">Recent Additions</div>
-        <table class="w-full text-left border-collapse">
-            <tbody class="divide-y divide-gray-100" id="dashboard-recent-list"></tbody>
-        </table>
+        <table class="w-full text-left border-collapse"><tbody class="divide-y divide-gray-100" id="dashboard-recent-list"></tbody></table>
     </div>
 </template>
 
@@ -226,9 +147,30 @@
         </div>
         <div class="relative w-full md:w-auto">
             <span class="material-icons-round absolute left-3 top-2.5 text-gray-400">search</span>
-            <input type="text" onkeyup="app.searchBooks(this.value)" placeholder="Search..." class="pl-10 pr-4 py-2 w-full md:w-64 rounded-full border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <input type="text" onkeyup="app.filter.title=this.value; app.loadBooks();" placeholder="Search..." class="pl-10 pr-4 py-2 w-full md:w-64 rounded-full border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
     </div>
+
+    <div class="flex flex-wrap gap-3 mb-4">
+        <select onchange="app.filter.sortBy=this.value; app.loadBooks()" class="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none">
+            <option value="id_desc">Newest Added</option>
+            <option value="id_asc">Oldest Added</option>
+            <option value="title_asc">Title (A-Z)</option>
+            <option value="title_desc">Title (Z-A)</option>
+            <option value="publicationYear_desc">Year (Newest)</option>
+            <option value="publicationYear_asc">Year (Oldest)</option>
+        </select>
+        <select id="filter-genre" onchange="app.filter.genreId=this.value; app.loadBooks()" class="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none">
+            <option value="">All Genres</option>
+        </select>
+        <select id="filter-category" onchange="app.filter.categoryId=this.value; app.loadBooks()" class="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none">
+            <option value="">All Categories</option>
+        </select>
+        <select id="filter-series" onchange="app.filter.seriesId=this.value; app.loadBooks()" class="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none">
+            <option value="">All Series</option>
+        </select>
+    </div>
+
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-4">
         <table class="w-full text-left">
             <thead class="bg-gray-50">
@@ -252,38 +194,18 @@
 </template>
 
 <template id="tmpl-resources">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-3xl font-bold text-gray-800" id="resource-title">Resources</h2>
-        <button onclick="app.openResourceModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-sm hover:bg-indigo-700 flex items-center gap-2">
-            <span class="material-icons-round text-sm">add</span> <span id="resource-add-btn">Add New</span>
-        </button>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <table class="w-full text-left">
-            <thead class="bg-gray-50">
-            <tr><th class="p-4 text-xs font-semibold text-gray-500 uppercase">Name</th></tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100" id="resource-list-body"></tbody>
-        </table>
-    </div>
+    <div class="flex justify-between items-center mb-6"><h2 class="text-3xl font-bold text-gray-800" id="resource-title">Resources</h2><button onclick="app.openResourceModal()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-sm hover:bg-indigo-700 flex items-center gap-2"><span class="material-icons-round text-sm">add</span> <span id="resource-add-btn">Add New</span></button></div>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"><table class="w-full text-left"><thead class="bg-gray-50"><tr><th class="p-4 text-xs font-semibold text-gray-500 uppercase">Name</th></tr></thead><tbody class="divide-y divide-gray-100" id="resource-list-body"></tbody></table></div>
 </template>
 
 <script>
     const app = {
-        state: {
-            currentView: 'dashboard',
-            books: [],
-            page: 0,
-            totalPages: 0,
-            searchQuery: '',
-            publishers: [], authors: [], categories: [], series: [], genres: [], topics: [],
-            currentResourceType: ''
-        },
+        state: { currentView: 'dashboard', books: [], page: 0, totalPages: 0,
+            publishers: [], authors: [], categories: [], series: [], genres: [], topics: [], currentResourceType: '' },
 
-        init: async function() {
-            await this.fetchAllRefs();
-            this.navigate('dashboard');
-        },
+        filter: { title: '', categoryId: '', genreId: '', seriesId: '', sortBy: 'id_desc' },
+
+        init: async function() { await this.fetchAllRefs(); this.navigate('dashboard'); },
 
         api: async function(url, method = 'GET', body = null) {
             try {
@@ -308,13 +230,13 @@
         navigate: async function(view) {
             this.state.currentView = view;
             const container = document.getElementById('view-container');
-
             if (view === 'dashboard') {
                 container.innerHTML = document.getElementById('tmpl-dashboard').innerHTML;
                 await this.loadDashboard();
             } else if (view === 'books') {
                 container.innerHTML = document.getElementById('tmpl-books').innerHTML;
-                this.state.page = 0; // Reset page on nav
+                this.populateFilters();
+                this.state.page = 0;
                 await this.loadBooks();
             } else {
                 container.innerHTML = document.getElementById('tmpl-resources').innerHTML;
@@ -322,7 +244,16 @@
             }
         },
 
-        // --- DASHBOARD ---
+        populateFilters: function() {
+            const fill = (id, list, txt) => {
+                const el = document.getElementById(id);
+                if(el) el.innerHTML = `<option value="">${txt}</option>` + list.map(x => `<option value="${x.id}">${x.name}</option>`).join('');
+            };
+            fill('filter-genre', this.state.genres, 'All Genres');
+            fill('filter-category', this.state.categories, 'All Categories');
+            fill('filter-series', this.state.series, 'All Series');
+        },
+
         loadDashboard: async function() {
             const stats = await this.api('/api/library/overview');
             if (stats) {
@@ -333,17 +264,21 @@
             }
             const books = await this.api('/api/books/all') || [];
             const recent = books.slice(-5).reverse();
+            // Force "simple" to FALSE to show edit button, but css hides extra info cols
             document.getElementById('dashboard-recent-list').innerHTML = recent.map(b => this.renderBookRow(b, true)).join('');
         },
 
-        // --- BOOKS (PAGINATION) ---
-        loadBooks: async function(query = '') {
-            if(typeof query === 'string') this.state.searchQuery = query;
-            const q = this.state.searchQuery;
-            const p = this.state.page;
+        loadBooks: async function() {
+            const { title, categoryId, genreId, seriesId, sortBy } = this.filter;
+            const [sortField, sortDir] = sortBy.split('_');
 
-            const data = await this.api(`/api/books?title=${q}&page=${p}&size=10`);
+            let query = `/api/books?page=${this.state.page}&size=10&sortBy=${sortField}&sortDir=${sortDir}`;
+            if(title) query += `&title=${encodeURIComponent(title)}`;
+            if(categoryId) query += `&categoryId=${categoryId}`;
+            if(genreId) query += `&genreId=${genreId}`;
+            if(seriesId) query += `&seriesId=${seriesId}`;
 
+            const data = await this.api(query);
             if(data && data.content) {
                 this.state.books = data.content;
                 this.state.totalPages = data.totalPages;
@@ -359,34 +294,21 @@
             document.getElementById('btn-prev').disabled = this.state.page === 0;
             document.getElementById('btn-next').disabled = this.state.page >= (this.state.totalPages - 1);
         },
+        prevPage: function() { if(this.state.page > 0) { this.state.page--; this.loadBooks(); } },
+        nextPage: function() { if(this.state.page < this.state.totalPages - 1) { this.state.page++; this.loadBooks(); } },
 
-        prevPage: function() {
-            if(this.state.page > 0) {
-                this.state.page--;
-                this.loadBooks();
-            }
-        },
-
-        nextPage: function() {
-            if(this.state.page < this.state.totalPages - 1) {
-                this.state.page++;
-                this.loadBooks();
-            }
-        },
-
-        renderBookRow: function(b, simple) {
+        renderBookRow: function(b, isDashboard) {
             const seriesTag = b.series ? `<span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded text-xs mr-1">${b.series.name}</span>` : '';
             const genresTags = b.genres ? b.genres.map(g => `<span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded text-xs mr-1">${g.name}</span>`).join('') : '';
             const topicsTags = b.topics ? b.topics.map(t => `<span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs mr-1">#${t.name}</span>`).join('') : '';
 
-            const extraInfo = simple ? '' : `
-            <td class="p-4 hidden md:table-cell">
-                <div class="flex flex-wrap gap-1">${seriesTag}${genresTags}</div>
-                <div class="mt-1 flex flex-wrap gap-1">${topicsTags}</div>
-            </td>
-        `;
-            const statusColor = b.readingStatus === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                b.readingStatus === 'READING' ? 'bg-indigo-100 text-indigo-800' : 'bg-gray-100 text-gray-600';
+            // In Dashboard, we hide the complex "Series & Genre" column via template table structure, but we want the Edit button.
+            // The template tables differ. Dashboard table has 3 cols. Books table has 4 cols.
+            // We return 4 TDs here. Dashboard table will ignore the extra TD if header only has 3? No, that breaks layout.
+            // Fix: Conditional TD rendering.
+
+            const extraCol = isDashboard ? '' : `<td class="p-4 hidden md:table-cell"><div class="flex flex-wrap gap-1">${seriesTag}${genresTags}</div><div class="mt-1 flex flex-wrap gap-1">${topicsTags}</div></td>`;
+            const statusColor = b.readingStatus === 'COMPLETED' ? 'bg-green-100 text-green-800' : b.readingStatus === 'READING' ? 'bg-indigo-100 text-indigo-800' : 'bg-gray-100 text-gray-600';
 
             return `
             <tr class="hover:bg-gray-50 border-b border-gray-50">
@@ -394,80 +316,52 @@
                     <div class="font-medium text-gray-800">${b.title}</div>
                     <div class="text-xs text-gray-500">${b.authorName || 'No Author'} &bull; ${b.publisher?.name || 'No Publisher'}</div>
                 </td>
-                ${extraInfo}
+                ${extraCol}
                 <td class="p-4"><span class="px-2 py-1 text-xs font-bold rounded ${statusColor}">${b.readingStatus}</span></td>
                 <td class="p-4 text-right">
-                   ${!simple ? `<button onclick="app.editBook(${b.id})" class="text-gray-400 hover:text-indigo-600 mr-2"><span class="material-icons-round">edit</span></button>
-                    <button onclick="app.deleteBook(${b.id})" class="text-gray-400 hover:text-red-500"><span class="material-icons-round">delete</span></button>` : ''}
+                   <button onclick="app.editBook(${b.id})" class="text-gray-400 hover:text-indigo-600 mr-2"><span class="material-icons-round">edit</span></button>
+                   ${!isDashboard ? `<button onclick="app.deleteBook(${b.id})" class="text-gray-400 hover:text-red-500"><span class="material-icons-round">delete</span></button>` : ''}
                 </td>
-            </tr>
-        `;
+            </tr>`;
         },
 
-        searchBooks: function(val) {
-            this.state.page = 0;
-            this.loadBooks(val);
-        },
-
-        // --- RESOURCES ---
         loadResources: async function(type) {
             this.state.currentResourceType = type;
             const map = { 'authors': 'Authors', 'publishers': 'Publishers', 'categories': 'Categories', 'series': 'Book Series', 'genres': 'Genres', 'topics': 'Topics' };
             document.getElementById('resource-title').innerText = map[type];
             document.getElementById('resource-add-btn').innerText = 'Add ' + map[type].slice(0, -1);
-
             const data = await this.api(`/api/references/${type}`);
-            document.getElementById('resource-list-body').innerHTML = data.map(item => `
-            <tr class="border-b border-gray-50 hover:bg-gray-50">
-                <td class="p-4 font-medium text-gray-800">${item.name}</td>
-            </tr>
-        `).join('');
+            document.getElementById('resource-list-body').innerHTML = data.map(item => `<tr class="border-b border-gray-50 hover:bg-gray-50"><td class="p-4 font-medium text-gray-800">${item.name}</td></tr>`).join('');
         },
 
-        openResourceModal: function() {
-            document.getElementById('resource-form').reset();
-            this.toggleModal('resource-modal', true);
-        },
-
+        openResourceModal: function() { document.getElementById('resource-form').reset(); this.toggleModal('resource-modal', true); },
         saveResource: async function(e) {
             e.preventDefault();
-            const type = this.state.currentResourceType;
-            const name = document.getElementById('resource-name').value;
-            await this.api(`/api/references/${type}`, 'POST', { name });
-            this.toggleModal('resource-modal', false);
-            this.fetchAllRefs();
-            this.loadResources(type);
+            await this.api(`/api/references/${this.state.currentResourceType}`, 'POST', { name: document.getElementById('resource-name').value });
+            this.toggleModal('resource-modal', false); this.fetchAllRefs(); this.loadResources(this.state.currentResourceType);
         },
 
-        // --- EDIT BOOK ---
         openBookModal: function(book = null) {
             this.toggleModal('book-modal', true);
             const f = document.getElementById('book-form'); f.reset();
             document.getElementById('book-id').value = book ? book.id : '';
             document.getElementById('modal-title').innerText = book ? 'Edit Book' : 'Add Book';
 
-            const fill = (id, list, selectedId) => {
-                const el = document.getElementById(id);
-                el.innerHTML = '<option value="">None</option>' + list.map(x => `<option value="${x.id}" ${selectedId === x.id ? 'selected' : ''}>${x.name}</option>`).join('');
-            };
+            const fill = (id, list, selectedId) => { document.getElementById(id).innerHTML = '<option value="">None</option>' + list.map(x => `<option value="${x.id}" ${selectedId === x.id ? 'selected' : ''}>${x.name}</option>`).join(''); };
 
-            const pubSelect = document.getElementById('book-publisher');
-            pubSelect.innerHTML = this.state.publishers.map(p => `<option value="${p.id}" ${book?.publisher?.id === p.id ? 'selected' : ''}>${p.name}</option>`).join('');
-            if(this.state.publishers.length === 0) document.getElementById('no-publisher-msg').classList.remove('hidden');
-            else document.getElementById('no-publisher-msg').classList.add('hidden');
+            const pEl = document.getElementById('book-publisher');
+            pEl.innerHTML = this.state.publishers.map(p => `<option value="${p.id}" ${book?.publisher?.id === p.id ? 'selected' : ''}>${p.name}</option>`).join('');
 
             fill('book-category', this.state.categories, book?.category?.id);
             fill('book-series', this.state.series, book?.series?.id);
 
-            const makeChecks = (containerId, list, selectedObjects) => {
-                const ids = new Set((selectedObjects || []).map(x => x.id));
-                const div = document.getElementById(containerId);
-                div.innerHTML = list.map(item => `
+            const makeChecks = (cid, list, sel) => {
+                const ids = new Set((sel || []).map(x => x.id));
+                document.getElementById(cid).innerHTML = list.map(item => `
                 <label class="flex items-center space-x-2 p-1 hover:bg-white rounded cursor-pointer">
                     <input type="checkbox" value="${item.id}" class="rounded text-indigo-600 focus:ring-indigo-500" ${ids.has(item.id) ? 'checked' : ''}>
                     <span class="text-gray-700">${item.name}</span>
-                </label>
-            `).join('');
+                </label>`).join('');
             };
             makeChecks('book-genres', this.state.genres, book?.genres);
             makeChecks('book-topics', this.state.topics, book?.topics);
@@ -479,19 +373,13 @@
             }
         },
 
-        editBook: async function(id) {
-            const book = await this.api(`/api/books/${id}`);
-            this.openBookModal(book);
-        },
-
+        editBook: async function(id) { const book = await this.api(`/api/books/${id}`); this.openBookModal(book); },
         saveBook: async function(e) {
             e.preventDefault();
             const id = document.getElementById('book-id').value;
             const pubId = document.getElementById('book-publisher').value;
             if (!pubId) { alert('Publisher required'); return; }
-
             const getChecked = (divId) => Array.from(document.querySelectorAll(`#${divId} input:checked`)).map(cb => ({ id: parseInt(cb.value) }));
-
             const payload = {
                 title: document.getElementById('book-title').value,
                 authorName: document.getElementById('book-author').value,
@@ -499,37 +387,16 @@
                 publisher: { id: parseInt(pubId) },
                 category: document.getElementById('book-category').value ? { id: parseInt(document.getElementById('book-category').value) } : null,
                 series: document.getElementById('book-series').value ? { id: parseInt(document.getElementById('book-series').value) } : null,
-                genres: getChecked('book-genres'),
-                topics: getChecked('book-topics')
+                genres: getChecked('book-genres'), topics: getChecked('book-topics')
             };
-
-            if (id) await this.api(`/api/books/${id}`, 'PUT', payload);
-            else await this.api('/api/books', 'POST', payload);
-
+            if (id) await this.api(`/api/books/${id}`, 'PUT', payload); else await this.api('/api/books', 'POST', payload);
             this.toggleModal('book-modal', false);
-            // Force refresh of the current view logic
-            if(this.state.currentView === 'books') {
-                this.loadBooks();
-            } else {
-                this.navigate('dashboard');
-            }
+            if(this.state.currentView === 'books') this.loadBooks(); else this.navigate('dashboard');
         },
-
-        deleteBook: async function(id) {
-            if(confirm('Delete book?')) {
-                await this.api(`/api/books/${id}`, 'DELETE');
-                this.loadBooks();
-            }
-        },
-
-        toggleModal: function(id, show) {
-            const el = document.getElementById(id);
-            if(show) { el.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); }
-            else { el.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); }
-        },
+        deleteBook: async function(id) { if(confirm('Delete?')) { await this.api(`/api/books/${id}`, 'DELETE'); this.loadBooks(); } },
+        toggleModal: function(id, show) { const el = document.getElementById(id); if(show) { el.classList.remove('opacity-0', 'pointer-events-none'); document.body.classList.add('modal-active'); } else { el.classList.add('opacity-0', 'pointer-events-none'); document.body.classList.remove('modal-active'); } },
         closeModal: function(id) { this.toggleModal(id, false); }
     };
-
     document.addEventListener('DOMContentLoaded', () => app.init());
 </script>
 </body>

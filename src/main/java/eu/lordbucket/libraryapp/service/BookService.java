@@ -3,9 +3,11 @@ package eu.lordbucket.libraryapp.service;
 import eu.lordbucket.libraryapp.model.Book;
 import eu.lordbucket.libraryapp.model.ReadingStatus;
 import eu.lordbucket.libraryapp.repository.BookRepository;
+import jakarta.persistence.criteria.Join;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,11 +81,26 @@ public class BookService {
     }
 
     // Paged Search
-    public Page<Book> searchBooks(String title, Pageable pageable) {
+    public Page<Book> searchBooks(String title, Long categoryId, Long genreId, Long seriesId, Pageable pageable) {
+        Specification<Book> spec = (root, query, cb) -> cb.conjunction();
+
         if (title != null && !title.isEmpty()) {
-            return bookRepository.findByTitleContainingIgnoreCase(title, pageable);
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + title.toLowerCase() + "%"));
         }
-        return bookRepository.findAll(pageable);
+        if (categoryId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("category").get("id"), categoryId));
+        }
+        if (seriesId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("series").get("id"), seriesId));
+        }
+        if (genreId != null) {
+            spec = spec.and((root, query, cb) -> {
+                Join<Object, Object> genreJoin = root.join("genres");
+                return cb.equal(genreJoin.get("id"), genreId);
+            });
+        }
+
+        return bookRepository.findAll(spec, pageable);
     }
 
     // Unpaged (for simple lists)

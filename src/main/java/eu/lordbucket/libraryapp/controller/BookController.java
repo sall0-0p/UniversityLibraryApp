@@ -30,14 +30,18 @@ public class BookController {
     @GetMapping
     public ResponseEntity<Page<Book>> getAllBooks(
             @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long genreId,
+            @RequestParam(required = false) Long seriesId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDir
+            @RequestParam(defaultValue = "desc") String sortDir
     ) {
-        Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(bookService.searchBooks(title, pageable));
+
+        return ResponseEntity.ok(bookService.searchBooks(title, categoryId, genreId, seriesId, pageable));
     }
 
     // 1.1 GET ALL (Unpaged - specifically for dashboard recent list if needed, strictly speaking we can reuse paged)
